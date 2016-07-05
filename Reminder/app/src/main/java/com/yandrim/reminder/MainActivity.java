@@ -2,8 +2,8 @@ package com.yandrim.reminder;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
-import android.widget.Toolbar;
 
 public class MainActivity extends Activity {
     
