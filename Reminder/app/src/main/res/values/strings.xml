@@ -1,8 +1,13 @@
 <resources>
     <string name="app_name">MeraReminder</string>
     <string name="search_title">Поиск</string>
-    <string name="menu_item_notification">Напоминания</string>
+    <string name="menu_item_notification">Список дел</string>
 
     <string name="view_navigation_open">Открыть</string>
     <string name="view_navigation_close">Закрыть</string>
+
+    <string name="tab_item_meetings">Встречи</string>
+    <string name="tab_item_todo">Дела</string>
+    <string name="tab_item_birthdays">Дни Рождения</string>
+    <string name="tab_item_history">История</string>
 </resources>
