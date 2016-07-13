@@ -13,16 +13,19 @@ import com.yandrim.reminder.R;
 import com.yandrim.reminder.adapter.RemindListAdapter;
 import com.yandrim.reminder.dto.RemindDTO;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class BirthdaysFragment extends AbstractTabsFragment{
     private static final int LAYOUT = R.layout.fragment_birthdays;
+    private RemindListAdapter adapter;
 
-    public static BirthdaysFragment getInstance(Context context){
+    private List<RemindDTO> data;
+
+    public static BirthdaysFragment getInstance(Context context, List<RemindDTO> data){
         Bundle args = new Bundle();
         BirthdaysFragment fragment = new BirthdaysFragment();
         fragment.setArguments(args);
+        fragment.setData(data);
         fragment.setContext(context);
         fragment.setTitle(context.getString(R.string.tab_item_birthdays));
 
@@ -36,22 +39,23 @@ public class BirthdaysFragment extends AbstractTabsFragment{
 
         RecyclerView rv = (RecyclerView) view.findViewById(R.id.recyclerView);
         rv.setLayoutManager(new LinearLayoutManager((context)));
-        rv.setAdapter(new RemindListAdapter(createMockRemindListData()));
+        adapter = new RemindListAdapter(data);
+        rv.setAdapter(adapter);
         return view;
-    }
-
-    private List<RemindDTO> createMockRemindListData() {
-            List<RemindDTO> data = new ArrayList<>();
-            data.add(new RemindDTO("ДР 1"));
-            data.add(new RemindDTO("ДР 2"));
-            data.add(new RemindDTO("ДР 3"));
-            data.add(new RemindDTO("ДР 4"));
-            data.add(new RemindDTO("ДР 5"));
-            data.add(new RemindDTO("ДР 6"));
-    return data;
     }
 
     public void setContext(Context context) {
         this.context = context;
+    }
+
+    public void setData(List<RemindDTO> data) {
+        this.data = data;
+    }
+
+    public void refreshData(List<RemindDTO> data){
+        if(adapter!=null){
+            adapter.setData(data);
+            adapter.notifyDataSetChanged();
+        }
     }
 }

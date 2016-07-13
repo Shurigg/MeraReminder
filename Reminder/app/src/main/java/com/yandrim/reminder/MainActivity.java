@@ -1,5 +1,6 @@
 package com.yandrim.reminder;
 
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
@@ -11,6 +12,13 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
 import com.yandrim.reminder.adapter.TabsFragmentAdapter;
+import com.yandrim.reminder.dto.RemindDTO;
+
+import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
+import org.springframework.web.client.RestTemplate;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -18,13 +26,13 @@ public class MainActivity extends AppCompatActivity {
     private Toolbar toolbar;
     private DrawerLayout drawerLayout;
     private ViewPager viewPager;
+    private TabsFragmentAdapter adapter;
     
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         setTheme(R.style.AppDefault);
         super.onCreate(savedInstanceState);
         setContentView(LAYOUT);
-        
         initToolbar();
         initNavigationView();
         initTabs();
@@ -65,13 +73,32 @@ public class MainActivity extends AppCompatActivity {
 
     private void initTabs() {
         viewPager = (ViewPager)findViewById(R.id.viewPager);
-        TabsFragmentAdapter adapter = new TabsFragmentAdapter(this, getSupportFragmentManager());
+        adapter = new TabsFragmentAdapter(this, getSupportFragmentManager());
         viewPager.setAdapter(adapter);
+        new RemindMeTask().execute();
         TabLayout tabLayout = (TabLayout)findViewById(R.id.tabLayout);
         tabLayout.setupWithViewPager(viewPager);
     }
 
     private void showNotificationTab(){
         viewPager.setCurrentItem(Constants.TAB_TWO);
+    }
+
+    private class RemindMeTask extends AsyncTask<Void, Void, RemindDTO>{
+
+        @Override
+        protected RemindDTO doInBackground(Void... params) {
+            RestTemplate template = new RestTemplate();
+            template.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
+            RemindDTO remind = template.getForObject(Constants.URL.GET_REMIND, RemindDTO.class);
+            return remind;
+        }
+
+        @Override
+        protected void onPostExecute(RemindDTO remindDTO) {
+            List<RemindDTO> data = new ArrayList<>();
+            data.add(remindDTO);
+            adapter.setData(data);
+        }
     }
 }

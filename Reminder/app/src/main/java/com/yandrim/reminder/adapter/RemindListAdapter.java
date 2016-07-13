@@ -12,10 +12,11 @@ import com.yandrim.reminder.dto.RemindDTO;
 
 import java.util.List;
 
-public class RemindListAdapter extends RecyclerView.Adapter<RemindListAdapter.RemindViewHolder>{
+public class RemindListAdapter extends RecyclerView.Adapter<RemindListAdapter.RemindViewHolder> {
+
     private List<RemindDTO> data;
 
-    public RemindListAdapter(List<RemindDTO> data){
+    public RemindListAdapter(List<RemindDTO> data) {
         this.data = data;
     }
 
@@ -37,7 +38,11 @@ public class RemindListAdapter extends RecyclerView.Adapter<RemindListAdapter.Re
         return data.size();
     }
 
-    public static class RemindViewHolder extends RecyclerView.ViewHolder{
+    public void setData(List<RemindDTO> data) {
+        this.data = data;
+    }
+
+    public static class RemindViewHolder extends RecyclerView.ViewHolder {
         CardView cardView;
         TextView title;
 
@@ -48,4 +53,5 @@ public class RemindListAdapter extends RecyclerView.Adapter<RemindListAdapter.Re
             title = (TextView) itemView.findViewById(R.id.title);
         }
     }
+
 }
