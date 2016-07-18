@@ -1,7 +1,10 @@
 package com.yandrim.reminder;
 
-import android.os.AsyncTask;
+import android.app.AlertDialog;
+import android.app.Dialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
@@ -10,15 +13,13 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.TextView;
 
 import com.yandrim.reminder.adapter.TabsFragmentAdapter;
-import com.yandrim.reminder.dto.RemindDTO;
+import com.yandrim.reminder.fragment.CustomDialogFragment;
 
-import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
-import org.springframework.web.client.RestTemplate;
-
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Calendar;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -56,13 +57,12 @@ public class MainActivity extends AppCompatActivity {
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.view_navigation_open, R.string.view_navigation_close);
         drawerLayout.setDrawerListener(toggle);
         toggle.syncState();
-
         NavigationView navigationView = (NavigationView)findViewById(R.id.navigation);
-        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener(){
+        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(MenuItem menuItem) {
                 drawerLayout.closeDrawers();
-                switch (menuItem.getItemId()){
+                switch (menuItem.getItemId()) {
                     case R.id.actionNotificationItem:
                         showNotificationTab();
                 }
@@ -73,32 +73,17 @@ public class MainActivity extends AppCompatActivity {
 
     private void initTabs() {
         viewPager = (ViewPager)findViewById(R.id.viewPager);
-        adapter = new TabsFragmentAdapter(this, getSupportFragmentManager());
-        viewPager.setAdapter(adapter);
-        new RemindMeTask().execute();
-        TabLayout tabLayout = (TabLayout)findViewById(R.id.tabLayout);
-        tabLayout.setupWithViewPager(viewPager);
-    }
-
-    private void showNotificationTab(){
-        viewPager.setCurrentItem(Constants.TAB_TWO);
-    }
-
-    private class RemindMeTask extends AsyncTask<Void, Void, RemindDTO>{
-
-        @Override
-        protected RemindDTO doInBackground(Void... params) {
-            RestTemplate template = new RestTemplate();
-            template.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
-            RemindDTO remind = template.getForObject(Constants.URL.GET_REMIND, RemindDTO.class);
-            return remind;
+            adapter = new TabsFragmentAdapter(this, getSupportFragmentManager());
+            viewPager.setOffscreenPageLimit(adapter.getCount());
+            viewPager.setAdapter(adapter);
+            TabLayout tabLayout = (TabLayout)findViewById(R.id.tabLayout);
+            tabLayout.setupWithViewPager(viewPager);
         }
 
-        @Override
-        protected void onPostExecute(RemindDTO remindDTO) {
-            List<RemindDTO> data = new ArrayList<>();
-            data.add(remindDTO);
-            adapter.setData(data);
+        private void showNotificationTab(){
+            viewPager.setCurrentItem(Constants.TAB_TWO);
         }
+    public void setNewDRemind(View view){
+        new CustomDialogFragment().show(getSupportFragmentManager(),"remind");
     }
 }

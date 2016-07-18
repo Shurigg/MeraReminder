@@ -19,6 +19,8 @@ import java.util.List;
 public class HistoryFragment extends AbstractTabsFragment{
     private static final int LAYOUT = R.layout.fragment_history;
 
+    private Context context;
+
     public static HistoryFragment getInstance(Context context){
         Bundle args = new Bundle();
         HistoryFragment fragment = new HistoryFragment();

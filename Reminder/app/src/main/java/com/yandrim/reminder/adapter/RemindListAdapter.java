@@ -53,5 +53,4 @@ public class RemindListAdapter extends RecyclerView.Adapter<RemindListAdapter.Re
             title = (TextView) itemView.findViewById(R.id.title);
         }
     }
-
 }

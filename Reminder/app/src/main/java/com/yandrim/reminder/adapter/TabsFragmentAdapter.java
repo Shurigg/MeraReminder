@@ -56,8 +56,8 @@ public class TabsFragmentAdapter extends FragmentPagerAdapter {
         tabs.put(3, HistoryFragment.getInstance(context));
     }
 
-    public void setData(List<RemindDTO> data) {
+    /*public void setData(List<RemindDTO> data) {
         this.data = data;
         birthdaysFragment.refreshData(data);
-    }
+    }*/
 }

@@ -9,23 +9,28 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.yandrim.reminder.Constants;
 import com.yandrim.reminder.R;
 import com.yandrim.reminder.adapter.RemindListAdapter;
 import com.yandrim.reminder.dto.RemindDTO;
 
+import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
+import org.springframework.web.client.RestTemplate;
+
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
-public class BirthdaysFragment extends AbstractTabsFragment{
+public class BirthdaysFragment extends AbstractTabsFragment {
     private static final int LAYOUT = R.layout.fragment_birthdays;
     private RemindListAdapter adapter;
-
+    private Context context;
     private List<RemindDTO> data;
 
-    public static BirthdaysFragment getInstance(Context context, List<RemindDTO> data){
+    public static BirthdaysFragment getInstance(Context context, List<RemindDTO> data) {
         Bundle args = new Bundle();
         BirthdaysFragment fragment = new BirthdaysFragment();
         fragment.setArguments(args);
-        fragment.setData(data);
         fragment.setContext(context);
         fragment.setTitle(context.getString(R.string.tab_item_birthdays));
 
@@ -35,12 +40,22 @@ public class BirthdaysFragment extends AbstractTabsFragment{
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        data = new ArrayList<>();
+        adapter = new RemindListAdapter(data);
         view = inflater.inflate(LAYOUT, container, false);
-
         RecyclerView rv = (RecyclerView) view.findViewById(R.id.recyclerView);
         rv.setLayoutManager(new LinearLayoutManager((context)));
-        adapter = new RemindListAdapter(data);
         rv.setAdapter(adapter);
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                RestTemplate template = new RestTemplate();
+                template.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
+                RemindDTO[] list1 = template.getForObject(Constants.URL.GET_BIRTHDAYS, RemindDTO[].class);
+                data = Arrays.asList(list1);
+                refreshData(data);
+            }
+        }).start();
         return view;
     }
 
@@ -48,14 +63,15 @@ public class BirthdaysFragment extends AbstractTabsFragment{
         this.context = context;
     }
 
-    public void setData(List<RemindDTO> data) {
-        this.data = data;
-    }
-
-    public void refreshData(List<RemindDTO> data){
-        if(adapter!=null){
+    public void refreshData(List<RemindDTO> data) {
+        if (adapter != null) {
             adapter.setData(data);
-            adapter.notifyDataSetChanged();
+            getActivity().runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    adapter.notifyDataSetChanged();
+                }
+            });
         }
     }
 }
