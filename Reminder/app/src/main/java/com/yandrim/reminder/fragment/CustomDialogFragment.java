@@ -10,6 +10,7 @@ import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AlertDialog;
 import android.text.format.DateUtils;
 import android.view.View;
+import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -19,26 +20,56 @@ import com.yandrim.reminder.R;
 
 import java.util.Calendar;
 
-public class CustomDialogFragment extends DialogFragment implements DialogInterface.OnClickListener{
+public class CustomDialogFragment extends DialogFragment implements DialogInterface.OnClickListener {
     private View form = null;
     private TextView currentDateTime;
     private Calendar dateAndTime = Calendar.getInstance();
+
+    private Button mChangeDate;
+    private Button mChangeTime;
 
     @NonNull
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         form = getActivity().getLayoutInflater().inflate(R.layout.dialog_fragment, null);
+
+        initView();
+
+        initListeners();
+
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         return (builder.setTitle("Добавить напоминание").setView(form).setPositiveButton(android.R.string.ok, this).setNegativeButton(android.R.string.cancel, null).create());
     }
 
+    private void initView() {
+        currentDateTime = (TextView) form.findViewById(R.id.currentDateTime);
+
+        mChangeDate = (Button) form.findViewById(R.id.dateButton);
+        mChangeTime = (Button) form.findViewById(R.id.timeButton);
+    }
+
+    private void initListeners() {
+        mChangeDate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                setDate(v);
+            }
+        });
+        mChangeTime.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                setTime(v);
+            }
+        });
+    }
+
     @Override
     public void onClick(DialogInterface dialog, int which) {
-        EditText titleBox = (EditText)form.findViewById(R.id.themeET);
-        EditText descrBox = (EditText)form.findViewById(R.id.descrET);
+        EditText titleBox = (EditText) form.findViewById(R.id.themeET);
+        EditText descrBox = (EditText) form.findViewById(R.id.descrET);
         String title = titleBox.getText().toString();
         String description = descrBox.getText().toString();
-        currentDateTime = (TextView)form.findViewById(R.id.currentDateTime);
+//        currentDateTime = (TextView) form.findViewById(R.id.currentDateTime);
         setInitialDateTime();
     }
 
