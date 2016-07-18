@@ -1,10 +1,6 @@
 package com.yandrim.reminder;
 
-import android.app.AlertDialog;
-import android.app.Dialog;
-import android.content.DialogInterface;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
@@ -14,12 +10,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.TextView;
 
 import com.yandrim.reminder.adapter.TabsFragmentAdapter;
 import com.yandrim.reminder.fragment.CustomDialogFragment;
-
-import java.util.Calendar;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -80,10 +73,11 @@ public class MainActivity extends AppCompatActivity {
             tabLayout.setupWithViewPager(viewPager);
         }
 
-        private void showNotificationTab(){
+    private void showNotificationTab(){
             viewPager.setCurrentItem(Constants.TAB_TWO);
         }
-    public void setNewDRemind(View view){
-        new CustomDialogFragment().show(getSupportFragmentManager(),"remind");
+
+    public void setNewRemind(View view){
+        new CustomDialogFragment().show(getSupportFragmentManager(), "remind");
     }
 }

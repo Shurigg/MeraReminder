@@ -48,7 +48,7 @@
             android:layout_gravity="end|bottom"
             android:layout_marginBottom="@dimen/fab_margin"
             android:layout_marginRight="@dimen/fab_margin"
-            android:onClick="setNewDRemind"
+            android:onClick="setNewRemind"
             app:backgroundTint="@color/colorPrimary" />
     </android.support.design.widget.CoordinatorLayout>
 

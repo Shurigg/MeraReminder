@@ -23,6 +23,7 @@ public class CustomDialogFragment extends DialogFragment implements DialogInterf
     private View form = null;
     private TextView currentDateTime;
     private Calendar dateAndTime = Calendar.getInstance();
+
     @NonNull
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
@@ -52,7 +53,7 @@ public class CustomDialogFragment extends DialogFragment implements DialogInterf
     }
 
     public void setDate(View v) {
-        new DatePickerDialog(form.getContext(), d,
+        new DatePickerDialog(v.getContext(), d,
                 dateAndTime.get(Calendar.YEAR),
                 dateAndTime.get(Calendar.MONTH),
                 dateAndTime.get(Calendar.DAY_OF_MONTH))
