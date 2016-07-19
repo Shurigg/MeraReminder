@@ -74,4 +74,26 @@ public class BirthdaysFragment extends AbstractTabsFragment {
             });
         }
     }
+
+    public void addData(final RemindDTO birthday){
+        if (adapter != null) {
+            birthday.setId(data.size());
+            data.add(birthday);
+            adapter.setData(data);
+            getActivity().runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    adapter.notifyDataSetChanged();
+                }
+            });
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    RestTemplate template = new RestTemplate();
+                    template.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
+                    template.postForObject(Constants.URL.GET_BIRTHDAYS, birthday ,RemindDTO.class);
+                }
+            }).start();
+        }
+    }
 }

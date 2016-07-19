@@ -10,20 +10,28 @@ import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AlertDialog;
 import android.text.format.DateUtils;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.TimePicker;
+import android.widget.Toast;
 
 import com.yandrim.reminder.R;
+import com.yandrim.reminder.dto.RemindDTO;
 
 import java.util.Calendar;
+import java.util.Date;
 
 public class CustomDialogFragment extends DialogFragment implements DialogInterface.OnClickListener {
     private View form = null;
     private TextView currentDateTime;
     private Calendar dateAndTime = Calendar.getInstance();
+    private String[] spinerData = {"встреча", "дело", "день рождения"};
+    Spinner spinner;
 
     private Button mChangeDate;
     private Button mChangeTime;
@@ -38,6 +46,24 @@ public class CustomDialogFragment extends DialogFragment implements DialogInterf
         initListeners();
 
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_item, spinerData);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+        spinner = (Spinner)form.findViewById(R.id.spinner);
+        spinner.setAdapter(adapter);
+
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view,
+                                       int position, long id) {
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> arg0) {
+            }
+        });
+
         return (builder.setTitle("Добавить напоминание").setView(form).setPositiveButton(android.R.string.ok, this).setNegativeButton(android.R.string.cancel, null).create());
     }
 
@@ -69,8 +95,22 @@ public class CustomDialogFragment extends DialogFragment implements DialogInterf
         EditText descrBox = (EditText) form.findViewById(R.id.descrET);
         String title = titleBox.getText().toString();
         String description = descrBox.getText().toString();
-//        currentDateTime = (TextView) form.findViewById(R.id.currentDateTime);
         setInitialDateTime();
+        RemindDTO remindDTO = new RemindDTO(title);
+        remindDTO.setRemindDate(dateAndTime.getTime());
+        switch (spinner.getSelectedItemPosition()){
+            case 0:
+                Toast.makeText(getContext(), "TI PIDOR0", Toast.LENGTH_SHORT).show();
+                BirthdaysFragment brth = (BirthdaysFragment) getFragmentManager().findFragmentById(R.id.brthFragment);
+                brth.addData(remindDTO);
+                break;
+            case 1:
+                Toast.makeText(getContext(),"TI PIDOR1", Toast.LENGTH_SHORT).show();
+                break;
+            case 2:
+                Toast.makeText(getContext(),"TI PIDOR2", Toast.LENGTH_SHORT).show();
+                break;
+        }
     }
 
     @Override
@@ -99,7 +139,7 @@ public class CustomDialogFragment extends DialogFragment implements DialogInterf
     }
 
     private void setInitialDateTime() {
-        currentDateTime.setText(DateUtils.formatDateTime(getContext(), dateAndTime.getTimeInMillis(), DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_SHOW_YEAR | DateUtils.FORMAT_SHOW_TIME));
+        currentDateTime.setText(DateUtils.formatDateTime(getContext(), dateAndTime.getTimeInMillis(), DateUtils.FORMAT_SHOW_YEAR | DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_SHOW_TIME));
     }
 
     TimePickerDialog.OnTimeSetListener t = new TimePickerDialog.OnTimeSetListener() {
