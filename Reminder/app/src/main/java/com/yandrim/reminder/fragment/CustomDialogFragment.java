@@ -1,5 +1,6 @@
 package com.yandrim.reminder.fragment;
 
+import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.TimePickerDialog;
@@ -20,6 +21,7 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import com.yandrim.reminder.MainActivity;
 import com.yandrim.reminder.R;
 import com.yandrim.reminder.dto.RemindDTO;
 
@@ -98,11 +100,14 @@ public class CustomDialogFragment extends DialogFragment implements DialogInterf
         setInitialDateTime();
         RemindDTO remindDTO = new RemindDTO(title);
         remindDTO.setRemindDate(dateAndTime.getTime());
+
+        MainActivity activity = (MainActivity) getActivity();
+
         switch (spinner.getSelectedItemPosition()){
             case 0:
                 Toast.makeText(getContext(), "TI PIDOR0", Toast.LENGTH_SHORT).show();
-                BirthdaysFragment brth = (BirthdaysFragment) getFragmentManager().findFragmentById(R.id.brthFragment);
-                brth.addData(remindDTO);
+//                BirthdaysFragment brth = (BirthdaysFragment) getFragmentManager().findFragmentById(R.id.brthFragment);
+//                brth.addData(remindDTO);
                 break;
             case 1:
                 Toast.makeText(getContext(),"TI PIDOR1", Toast.LENGTH_SHORT).show();
@@ -111,6 +116,7 @@ public class CustomDialogFragment extends DialogFragment implements DialogInterf
                 Toast.makeText(getContext(),"TI PIDOR2", Toast.LENGTH_SHORT).show();
                 break;
         }
+        activity.setRemindDTO(remindDTO, spinner.getSelectedItemPosition());
     }
 
     @Override

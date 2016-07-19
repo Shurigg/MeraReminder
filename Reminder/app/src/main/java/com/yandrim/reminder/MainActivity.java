@@ -12,6 +12,8 @@ import android.view.MenuItem;
 import android.view.View;
 
 import com.yandrim.reminder.adapter.TabsFragmentAdapter;
+import com.yandrim.reminder.dto.RemindDTO;
+import com.yandrim.reminder.fragment.AbstractTabsFragment;
 import com.yandrim.reminder.fragment.CustomDialogFragment;
 
 public class MainActivity extends AppCompatActivity {
@@ -21,7 +23,10 @@ public class MainActivity extends AppCompatActivity {
     private DrawerLayout drawerLayout;
     private ViewPager viewPager;
     private TabsFragmentAdapter adapter;
-    
+
+    private RemindDTO mRemindDTO;
+    private int type;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         setTheme(R.style.AppDefault);
@@ -79,5 +84,15 @@ public class MainActivity extends AppCompatActivity {
 
     public void setNewRemind(View view){
         new CustomDialogFragment().show(getSupportFragmentManager(), "remind");
+    }
+
+    public void setRemindDTO(RemindDTO dto, int type) {
+        mRemindDTO = dto;
+        this.type = type;
+
+        AbstractTabsFragment fragment = (AbstractTabsFragment) adapter.getItem(type);
+        if (fragment != null) {
+            fragment.addData(mRemindDTO);
+        }
     }
 }
