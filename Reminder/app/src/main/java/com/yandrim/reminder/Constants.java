@@ -7,7 +7,7 @@ public class Constants {
     public static final int TAB_FOUR = 3;
 
     public static class URL{
-        private static final String HOST = "http://192.168.43.63:8080/";
+        private static final String HOST = "http://192.168.0.59:8080/";
         public static final String GET_BIRTHDAYS = HOST + "birthdays";
         public  static final String GET_REMINDERS = HOST + "reminders";
         public static final String GET_MEETINGS = HOST + "meetings";

@@ -27,7 +27,7 @@ public class BirthdaysFragment extends AbstractTabsFragment {
     private Context context;
     private List<RemindDTO> data;
 
-    public static BirthdaysFragment getInstance(Context context, List<RemindDTO> data) {
+    public static BirthdaysFragment getInstance(Context context) {
         Bundle args = new Bundle();
         BirthdaysFragment fragment = new BirthdaysFragment();
         fragment.setArguments(args);
@@ -52,7 +52,7 @@ public class BirthdaysFragment extends AbstractTabsFragment {
                 RestTemplate template = new RestTemplate();
                 template.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
                 RemindDTO[] list1 = template.getForObject(Constants.URL.GET_BIRTHDAYS, RemindDTO[].class);
-                data = Arrays.asList(list1);
+                data = new ArrayList<RemindDTO>(Arrays.asList(list1));
                 refreshData(data);
             }
         }).start();

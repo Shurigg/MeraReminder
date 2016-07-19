@@ -14,6 +14,8 @@ import com.yandrim.reminder.adapter.RemindListAdapter;
 import com.yandrim.reminder.dto.RemindDTO;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 public class HistoryFragment extends AbstractTabsFragment{
@@ -43,14 +45,26 @@ public class HistoryFragment extends AbstractTabsFragment{
     }
 
     private List<RemindDTO> createMockRemindListData() {
-            List<RemindDTO> data = new ArrayList<>();
-            data.add(new RemindDTO("ДР 1"));
-            data.add(new RemindDTO("Встреча 1"));
-            data.add(new RemindDTO("ДР 2"));
-            data.add(new RemindDTO("Дело 1"));
-            data.add(new RemindDTO("Дело 2"));
-            data.add(new RemindDTO("Дело 3"));
-    return data;
+        List<RemindDTO> data = new ArrayList<>();
+        RemindDTO history = new RemindDTO("ДР 1");
+        history.setRemindDate(new Date());
+        history.setDescription("Как подарок нужно купить резиновую женщину\nПозвать коллег\nАлкоголь приносить с собой");
+        data.add(history);
+        history = new RemindDTO("Встреча 1");
+        history.setRemindDate(new Date());
+        history.setDescription("Принести с собой документы");
+        data.add(history);
+        history = new RemindDTO("ДР 2");
+        history.setRemindDate(new Date());
+        history.setDescription("Собрать на подарок с друзей до 16го\nЗаказать планшет на собранные деньги");
+        data.add(history);
+        history = new RemindDTO("Дело 1");
+        history.setRemindDate(new Date());
+        data.add(history);
+        history = new RemindDTO("Дело 2");
+        history.setRemindDate(new Date());
+        data.add(history);
+        return data;
     }
 
     public void setContext(Context context) {

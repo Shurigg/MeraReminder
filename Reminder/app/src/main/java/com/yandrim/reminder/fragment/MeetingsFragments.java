@@ -54,7 +54,7 @@ public class MeetingsFragments extends AbstractTabsFragment{
                 RestTemplate template = new RestTemplate();
                 template.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
                 RemindDTO[] list1 = template.getForObject(Constants.URL.GET_MEETINGS, RemindDTO[].class);
-                data = Arrays.asList(list1);
+                data = new ArrayList<RemindDTO>(Arrays.asList(list1));
                 refreshData(data);
             }
         }).start();
@@ -77,10 +77,10 @@ public class MeetingsFragments extends AbstractTabsFragment{
         }
     }
 
-    public void addData(final RemindDTO birthday){
+    public void addData(final RemindDTO meeting){
         if (adapter != null) {
-            birthday.setId(data.size());
-            data.add(birthday);
+            meeting.setId(data.size() + 1);
+            data.add(meeting);
             adapter.setData(data);
             getActivity().runOnUiThread(new Runnable() {
                 @Override
@@ -93,7 +93,7 @@ public class MeetingsFragments extends AbstractTabsFragment{
                 public void run() {
                     RestTemplate template = new RestTemplate();
                     template.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
-                    template.postForObject(Constants.URL.GET_BIRTHDAYS, birthday ,RemindDTO.class);
+                    template.postForObject(Constants.URL.GET_MEETINGS, meeting ,RemindDTO.class);
                 }
             }).start();
         }

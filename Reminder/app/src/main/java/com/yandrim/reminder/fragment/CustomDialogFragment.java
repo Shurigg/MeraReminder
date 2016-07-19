@@ -33,7 +33,7 @@ public class CustomDialogFragment extends DialogFragment implements DialogInterf
     private TextView currentDateTime;
     private Calendar dateAndTime = Calendar.getInstance();
     private String[] spinerData = {"встреча", "дело", "день рождения"};
-    Spinner spinner;
+    private Spinner spinner;
 
     private Button mChangeDate;
     private Button mChangeTime;
@@ -96,24 +96,26 @@ public class CustomDialogFragment extends DialogFragment implements DialogInterf
         EditText titleBox = (EditText) form.findViewById(R.id.themeET);
         EditText descrBox = (EditText) form.findViewById(R.id.descrET);
         String title = titleBox.getText().toString();
+        if(title.length()==0) {
+            Toast.makeText(getContext(), "Нет названия напоминания", Toast.LENGTH_SHORT).show();
+            return;
+        }
         String description = descrBox.getText().toString();
         setInitialDateTime();
         RemindDTO remindDTO = new RemindDTO(title);
+        remindDTO.setDescription(description);
         remindDTO.setRemindDate(dateAndTime.getTime());
 
         MainActivity activity = (MainActivity) getActivity();
-
         switch (spinner.getSelectedItemPosition()){
             case 0:
-                Toast.makeText(getContext(), "TI PIDOR0", Toast.LENGTH_SHORT).show();
-//                BirthdaysFragment brth = (BirthdaysFragment) getFragmentManager().findFragmentById(R.id.brthFragment);
-//                brth.addData(remindDTO);
+                Toast.makeText(getContext(), "Добавлена новая встреча", Toast.LENGTH_SHORT).show();
                 break;
             case 1:
-                Toast.makeText(getContext(),"TI PIDOR1", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(),"Добавлено новое дело", Toast.LENGTH_SHORT).show();
                 break;
             case 2:
-                Toast.makeText(getContext(),"TI PIDOR2", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(),"Добавлен день рождения", Toast.LENGTH_SHORT).show();
                 break;
         }
         activity.setRemindDTO(remindDTO, spinner.getSelectedItemPosition());

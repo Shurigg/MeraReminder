@@ -2,6 +2,7 @@ package com.yandrim.reminder.adapter;
 
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
+import android.text.format.DateUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +16,7 @@ import java.util.List;
 public class RemindListAdapter extends RecyclerView.Adapter<RemindListAdapter.RemindViewHolder> {
 
     private List<RemindDTO> data;
+    private View view;
 
     public RemindListAdapter(List<RemindDTO> data) {
         this.data = data;
@@ -22,7 +24,7 @@ public class RemindListAdapter extends RecyclerView.Adapter<RemindListAdapter.Re
 
     @Override
     public RemindViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.remind_item, parent, false);
+        view = LayoutInflater.from(parent.getContext()).inflate(R.layout.remind_item, parent, false);
 
         return new RemindViewHolder(view);
     }
@@ -31,6 +33,8 @@ public class RemindListAdapter extends RecyclerView.Adapter<RemindListAdapter.Re
     public void onBindViewHolder(RemindViewHolder holder, int position) {
         RemindDTO item = data.get(position);
         holder.title.setText(item.getTitle());
+        holder.description.setText(item.getDescription());
+        holder.remindDate.setText(DateUtils.formatDateTime(view.getContext(), item.getRemindDate().getTime(), DateUtils.FORMAT_SHOW_YEAR | DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_SHOW_TIME));
     }
 
     @Override
@@ -45,12 +49,16 @@ public class RemindListAdapter extends RecyclerView.Adapter<RemindListAdapter.Re
     public static class RemindViewHolder extends RecyclerView.ViewHolder {
         CardView cardView;
         TextView title;
+        TextView description;
+        TextView remindDate;
 
         public RemindViewHolder(View itemView) {
             super(itemView);
 
             cardView = (CardView) itemView.findViewById(R.id.cardView);
             title = (TextView) itemView.findViewById(R.id.title);
+            description = (TextView) itemView.findViewById(R.id.description);
+            remindDate = (TextView) itemView.findViewById(R.id.remind_date);
         }
     }
 }

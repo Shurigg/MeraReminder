@@ -11,7 +11,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Reminder Type"
+            android:text="Вид напоминания"
             android:textSize="12dp"
             android:textColor="@color/colorPrimaryDark"/>
         <Spinner
@@ -27,7 +27,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Title"
+            android:text="Заголовок"
             android:textSize="12dp"
             android:textColor="@color/colorPrimaryDark" />
         <EditText
@@ -43,13 +43,13 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Description"
+            android:text="Пояснения"
             android:textSize="12dp"
             android:textColor="@color/colorPrimaryDark" />
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Введите пояснение"
+            android:hint="Введите пояснения"
             android:id="@+id/descrET"/>
     </LinearLayout>
     <LinearLayout
@@ -63,12 +63,10 @@
         <Button android:id="@+id/timeButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Изменить время"
-            android:onClick="setTime"/>
+            android:text="Изменить время"/>
         <Button android:id="@+id/dateButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Изменить дату"
-            android:onClick="setDate"/>
+            android:text="Изменить дату"/>
     </LinearLayout>
 </LinearLayout>
