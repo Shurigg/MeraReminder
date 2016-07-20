@@ -18,4 +18,7 @@ public abstract class AbstractTabsFragment extends Fragment{
     }
     public void addData(RemindDTO remind){
     }
+    public void deleteRemind(int index){
+
+    }
 }

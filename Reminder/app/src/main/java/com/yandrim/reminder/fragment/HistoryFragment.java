@@ -48,7 +48,7 @@ public class HistoryFragment extends AbstractTabsFragment{
         List<RemindDTO> data = new ArrayList<>();
         RemindDTO history = new RemindDTO("ДР 1");
         history.setRemindDate(new Date());
-        history.setDescription("Как подарок нужно купить резиновую женщину\nПозвать коллег\nАлкоголь приносить с собой");
+        history.setDescription("К подарку купить цветы и открытку\nПозвать коллег\nЗаказать такси заранее");
         data.add(history);
         history = new RemindDTO("Встреча 1");
         history.setRemindDate(new Date());

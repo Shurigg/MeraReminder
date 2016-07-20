@@ -97,7 +97,10 @@ public class MainActivity extends AppCompatActivity {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 int tab = viewPager.getCurrentItem();
-                                //тут нужно узнать номер cardview на которую кликнул
+                                AbstractTabsFragment fragment = (AbstractTabsFragment) adapter.getItem(type);
+                                if (fragment != null) {
+                                    //fragment.deleteRemind(номер кард вью);
+                                }
                             }
                         })
                 .setNegativeButton(android.R.string.cancel,

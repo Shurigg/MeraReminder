@@ -96,4 +96,22 @@ public class BirthdaysFragment extends AbstractTabsFragment {
             }).start();
         }
     }
+    public void deleteRemind(final int index){
+        data.remove(index);
+        adapter.setData(data);
+        getActivity().runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                adapter.notifyDataSetChanged();
+            }
+        });
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                RestTemplate template = new RestTemplate();
+                template.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
+                template.delete(Constants.URL.GET_BIRTHDAYS + index);
+            }
+        }).start();
+    }
 }
