@@ -1,6 +1,5 @@
 package com.yandrim.reminder.fragment;
 
-import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.TimePickerDialog;
@@ -26,13 +25,12 @@ import com.yandrim.reminder.R;
 import com.yandrim.reminder.dto.RemindDTO;
 
 import java.util.Calendar;
-import java.util.Date;
 
 public class CustomDialogFragment extends DialogFragment implements DialogInterface.OnClickListener {
     private View form = null;
     private TextView currentDateTime;
     private Calendar dateAndTime = Calendar.getInstance();
-    private String[] spinerData = {"встреча", "дело", "день рождения"};
+    private String[] spinnerData = {"встреча", "дело", "день рождения"};
     private Spinner spinner;
 
     private Button mChangeDate;
@@ -49,7 +47,7 @@ public class CustomDialogFragment extends DialogFragment implements DialogInterf
 
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_item, spinerData);
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_item, spinnerData);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
         spinner = (Spinner)form.findViewById(R.id.spinner);

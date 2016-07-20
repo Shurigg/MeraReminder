@@ -28,7 +28,6 @@ public class RemindListAdapter extends RecyclerView.Adapter<RemindListAdapter.Re
     @Override
     public RemindViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         view = LayoutInflater.from(parent.getContext()).inflate(R.layout.remind_item, parent, false);
-
         return new RemindViewHolder(view);
     }
 
@@ -61,29 +60,6 @@ public class RemindListAdapter extends RecyclerView.Adapter<RemindListAdapter.Re
             title = (TextView) itemView.findViewById(R.id.title);
             description = (TextView) itemView.findViewById(R.id.description);
             remindDate = (TextView) itemView.findViewById(R.id.remind_date);
-            cardView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    AlertDialog.Builder builder = new AlertDialog.Builder(cardView.getContext());
-                    builder.setTitle("Удалить напоминание?")
-                            .setCancelable(false)
-                            .setPositiveButton(android.R.string.yes,
-                                    new DialogInterface.OnClickListener(){
-                                        @Override
-                                        public void onClick(DialogInterface dialog, int which) {
-
-                                        }
-                                    })
-                            .setNegativeButton(android.R.string.cancel,
-                                    new DialogInterface.OnClickListener() {
-                                        public void onClick(DialogInterface dialog, int id) {
-                                            dialog.cancel();
-                                        }
-                                    });
-                    AlertDialog alert = builder.create();
-                    alert.show();
-                }
-            });
         }
     }
 }

@@ -13,6 +13,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/cardView"
+        android:onClick="deleteReminder"
         card:cardElevation="3dp"
         card:cardUseCompatPadding="true">
 

@@ -1,11 +1,13 @@
 package com.yandrim.reminder;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
@@ -84,6 +86,28 @@ public class MainActivity extends AppCompatActivity {
 
     public void setNewRemind(View view){
         new CustomDialogFragment().show(getSupportFragmentManager(), "remind");
+    }
+
+    public void deleteReminder(View view){
+        AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext());
+        builder.setTitle("Удалить напоминание?")
+                .setCancelable(false)
+                .setPositiveButton(android.R.string.yes,
+                        new DialogInterface.OnClickListener(){
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                int tab = viewPager.getCurrentItem();
+                                //тут нужно узнать номер cardview на которую кликнул
+                            }
+                        })
+                .setNegativeButton(android.R.string.cancel,
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                dialog.cancel();
+                            }
+                        });
+        AlertDialog alert = builder.create();
+        alert.show();
     }
 
     public void setRemindDTO(RemindDTO dto, int type) {
